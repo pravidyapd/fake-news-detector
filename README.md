@@ -27,7 +27,6 @@ data/             Dataset (not included, see below)
 
 1. Clone the repository and open the folder:
 ```
-git clone https://github.com/yourname/fake-news-detector.git
 cd fake-news-detector
 ```
 
@@ -60,8 +59,5 @@ Training takes a few minutes and creates `model/model.pkl`, `model/vectorizer.pk
 ## Results
 Test accuracy of about 97.6% on held-out data (80/20 split).
 
-## Limitations
-- The model learns writing patterns from one dataset (mostly US political news), so it can be wrong on other kinds of news.
-- It is a machine learning demo, not a fact-checker.
-- History and counts are stored in memory and reset when the app restarts.
+
 
