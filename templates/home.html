@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script src="{{ url_for('static', filename='theme.js') }}" defer></script>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h2>📰 Fake News</h2>
+
+<a href="/">🏠 Home</a>
+
+<a href="/check">🔍 Check News</a>
+
+<a href="/history">📜 History</a>
+
+<a href="/accuracy">📊 Accuracy Dashboard</a>
+
+<a href="#" onclick="toggleMode()">🌙 Dark Mode</a>
+
+</div>
+
+
+<div class="main">
+<div class="container">
+
+<div class="card">
+
+<h1>Fake News Detection System</h1>
+
+<img src="https://cdn-icons-png.flaticon.com/512/2965/2965879.png" width="120">
+
+<p>This AI system detects whether news is Fake or Real.</p>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>

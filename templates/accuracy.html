@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Accuracy Dashboard</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<script src="{{ url_for('static', filename='theme.js') }}" defer></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h2>📰 Fake News</h2>
+
+<a href="/">🏠 Home</a>
+
+<a href="/check">🔍 Check News</a>
+
+<a href="/history">📜 History</a>
+
+<a href="/accuracy">📊 Accuracy Dashboard</a>
+
+<a href="#" onclick="toggleMode()">🌙 Dark Mode</a>
+
+</div>
+
+<div class="main">
+<div class="container">
+
+<div class="card">
+
+<h2>Accuracy Dashboard</h2>
+
+<h3>Model performance (test data)</h3>
+
+<div class="circle">
+{{ metrics.accuracy }} %
+</div>
+
+<p>Precision: {{ metrics.precision }}% &nbsp; Recall: {{ metrics.recall }}% &nbsp; F1: {{ metrics.f1 }}%</p>
+
+<h3>Confusion matrix (test data)</h3>
+
+<table style="max-width:450px; margin:auto;">
+<tr>
+<th></th>
+<th>Predicted Fake</th>
+<th>Predicted Real</th>
+</tr>
+<tr>
+<th>Actual Fake</th>
+<td>{{ metrics.confusion_matrix[0][0] }}</td>
+<td>{{ metrics.confusion_matrix[0][1] }}</td>
+</tr>
+<tr>
+<th>Actual Real</th>
+<td>{{ metrics.confusion_matrix[1][0] }}</td>
+<td>{{ metrics.confusion_matrix[1][1] }}</td>
+</tr>
+</table>
+
+{% if metrics.models %}
+<h3>Model comparison (test data)</h3>
+
+<table style="max-width:450px; margin:auto;">
+<tr>
+<th>Model</th>
+<th>Accuracy</th>
+<th>F1</th>
+</tr>
+{% for m in metrics.models %}
+<tr>
+<td>{{ m.name }}</td>
+<td>{{ m.accuracy }}%</td>
+<td>{{ m.f1 }}%</td>
+</tr>
+{% endfor %}
+</table>
+{% endif %}
+
+<h3>Your checks so far</h3>
+
+{% if real_count + fake_count == 0 %}
+<p>No news checked yet. Go to Check News and try a few articles.</p>
+{% else %}
+<div style="max-width:280px; margin:20px auto;">
+<canvas id="chart" data-real="{{ real_count }}" data-fake="{{ fake_count }}"></canvas>
+</div>
+{% endif %}
+
+</div>
+</div>
+</div>
+
+<script>
+
+const ctx=document.getElementById("chart")
+
+if(ctx){
+new Chart(ctx,{
+type:'doughnut',
+data:{
+labels:['Real News','Fake News'],
+datasets:[{
+data:[Number(ctx.dataset.real), Number(ctx.dataset.fake)]
+}]
+}
+})
+}
+
+</script>
+
+</body>
+
+</html>

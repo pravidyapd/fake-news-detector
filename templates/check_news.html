@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Check News</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script src="{{ url_for('static', filename='theme.js') }}" defer></script>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h2>📰 Fake News</h2>
+
+<a href="/">🏠 Home</a>
+
+<a href="/check">🔍 Check News</a>
+
+<a href="/history">📜 History</a>
+
+<a href="/accuracy">📊 Accuracy Dashboard</a>
+
+<a href="#" onclick="toggleMode()">🌙 Dark Mode</a>
+
+</div>
+
+
+<div class="main">
+<div class="container">
+
+<div class="card">
+
+<h2>Detect Fake or Real News</h2>
+
+<form method="POST">
+
+<textarea id="news" name="news" placeholder="Enter news text..." required></textarea>
+
+<p id="wordCount">Words: 0</p>
+
+<button type="submit">Check News</button>
+
+<button type="button" onclick="fillSample('real')">Try a real example</button>
+
+<button type="button" onclick="fillSample('fake')">Try a fake example</button>
+
+</form>
+
+{% if error %}
+<p style="color:red;">{{ error }}</p>
+{% endif %}
+
+{% if result %}
+
+<div class="result {% if result == 'Real News' %}real{% else %}fake{% endif %}">
+
+<h3>{{ result }}</h3>
+
+<p>Confidence : {{ confidence }}%</p>
+
+<div class="bar"><div class="bar-fill" data-width="{{ confidence }}"></div></div>
+
+<p><b>Words pushing toward Real:</b> {{ real_words|join(", ") }}</p>
+
+<p><b>Words pushing toward Fake:</b> {{ fake_words|join(", ") }}</p>
+
+</div>
+
+{% endif %}
+
+</div>
+</div>
+</div>
+
+<script>
+
+const textarea=document.getElementById("news")
+const counter=document.getElementById("wordCount")
+
+textarea.addEventListener("input",function(){
+
+let words=textarea.value.trim().split(/\s+/)
+
+if(textarea.value.trim()==""){
+counter.innerText="Words: 0"
+}else{
+counter.innerText="Words: "+words.length
+}
+
+})
+
+const samples={
+real:"WASHINGTON - The U.S. Senate voted on Tuesday to approve a budget bill, sending the measure to the House of Representatives, officials said. The bill would fund government agencies through the end of the fiscal year.",
+fake:"BREAKING: Shocking secret document PROVES politicians are hiding the truth from you, and the mainstream media refuses to tell you this! Share this before they delete it!!!"
+}
+
+function fillSample(type){
+textarea.value=samples[type]
+textarea.dispatchEvent(new Event("input"))
+}
+
+const fill=document.querySelector(".bar-fill")
+
+if(fill){
+fill.style.width=fill.dataset.width+"%"
+}
+
+</script>
+
+</body>
+</html>

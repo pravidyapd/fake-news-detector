@@ -1,0 +1,1 @@
+{"accuracy": 98.04, "precision": 97.98, "recall": 97.89, "f1": 97.93, "confusion_matrix": [[4635, 86], [90, 4173]], "models": [{"name": "Logistic Regression", "accuracy": 98.04, "f1": 97.93}, {"name": "Naive Bayes", "accuracy": 93.88, "f1": 93.52}, {"name": "Linear SVM", "accuracy": 99.21, "f1": 99.17}]}
